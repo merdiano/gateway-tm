@@ -1,0 +1,31 @@
+{
+    "name": "merdan/gateway-tm",
+    "description": "Turkmenistan Local payment gateway integration service",
+    "type": "library",
+    "require": {
+        "laravel/framework": "^10.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Merdan Ahmetovich",
+            "email": "merdan.m@gmail.com"
+        }
+    ],
+    "keywords": [
+        "laravel payment",
+        "laravel gateway",
+        "altyn asyr",
+        "rysgal bank",
+        "senagat",
+        "turkmen bank"
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Merdanio\\Payment\\Providers\\GatewayServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
