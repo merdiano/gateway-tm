@@ -3,7 +3,8 @@
     "description": "Turkmenistan Local payment gateway integration service",
     "type": "library",
     "require": {
-        "laravel/framework": "^10.0"
+        "laravel/framework": "^9.0|^10.0",
+        "php": "^8.1"
     },
     "license": "MIT",
     "authors": [

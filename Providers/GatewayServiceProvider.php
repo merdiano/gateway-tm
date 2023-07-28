@@ -18,7 +18,7 @@ class GatewayServiceProvider extends ServiceProvider
     public function boot(Router $router){
         $this->publishes([
             __DIR__.'/../Config/gateway.php' => config_path('gateway.php'),
-        ],'config');
+        ],'gateway');
 
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'gateway');
     }

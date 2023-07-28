@@ -16,7 +16,7 @@ class GatewayManager
      *
      * @return array
      */
-    public function getGateways() : array
+    public function availableGates() : array
     {
         $gateways = [];
 

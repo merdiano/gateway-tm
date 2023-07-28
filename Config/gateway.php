@@ -1,10 +1,25 @@
 <?php
 return [
     "http_client" => [
+
+        /*
+         * maximum waiting time for connection establishment with payment services
+         */
+        "connect_timeout" => 60,//sec
+
+        /*
+         * maximum waiting time for response from payment services
+         */
         "timeout"         => 60,//sec,
-        "connect_timeout" => 60,
+
+        /*
+         * Determine if the ssl verification should be enabled.
+         */
         "verify"          => true,
     ],
+    /*
+     * Payment Services
+     */
     "clients" => [
         "altyn-asyr"      => [
             "code"        => "altyn-asyr",
