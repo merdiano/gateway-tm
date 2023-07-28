@@ -11,14 +11,19 @@ Gateway-TM offers seamless integration with three primary payment services: Rysg
 - PHP 8.1 or higher
 
 ## Installation & Instructions 
+Default installation is via [Composer](https://getcomposer.org/).
 
+```bash
+composer require merdan/gateway-tm
+```
+The package will automatically register itself.
 Add the Service Provider manually to your
 `config/app` file in the `providers` section.
 
 ```php
 'providers' => [
     //...
-    Merdanio\Payment\Providers\GatewayServiceProvider::class,
+    Merdanio\GatewayTM\Payment\Providers\GatewayServiceProvider::class,
 ]
 ```
 
@@ -60,11 +65,11 @@ Gateway::availableGates();
 ```
 ### Register order
 ```php
-Gateway::registerOrder('rysgal', //providers code
+Gateway::registerOrder('rysgal', // providers code
     'success_route_name',        // route to return when payment is successful
     'fail_route_name',           // route to return when payment failed
-    14500,                       //payment amount
-    'Example Ecommerse payment', //payment description
+    14500,                       // payment amount
+    'Example Ecommerse payment', // payment description
     'ord-123'                    // payment order number
 );
 ```

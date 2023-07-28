@@ -1,6 +1,6 @@
 <?php
 
-namespace Merdiano\Payment\Gateways;
+namespace Merdanio\GatewayTM\Payment\Gateways;
 
 class Rysgalbank extends AbstractGateway
 {

@@ -1,8 +1,8 @@
 <?php
-namespace Merdiano\Payment\App;
+namespace Merdanio\GatewayTM\Payment\App;
 
-use Merdiano\Payment\Gateways\AbstractGateway;
-use Merdiano\Payment\Gateways\IGateway;
+use Merdanio\GatewayTM\Payment\Gateways\AbstractGateway;
+use Merdanio\GatewayTM\Payment\Gateways\IGateway;
 
 class GatewayFactory
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Merdanio\GatewayTM\Providers;
+namespace Merdanio\GatewayTM\Payment\Providers;
 
-use GatewayFacade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Merdiano\Payment\App\GatewayManager;
+use Merdanio\GatewayTM\Payment\Facades\GatewayFacade;
+use Merdanio\GatewayTM\Payment\App\GatewayManager;
 
 class GatewayServiceProvider extends ServiceProvider
 {

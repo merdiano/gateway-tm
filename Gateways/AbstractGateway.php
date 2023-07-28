@@ -1,8 +1,8 @@
 <?php
 
-namespace Merdiano\Payment\Gateways;
+namespace Merdanio\GatewayTM\Payment\Gateways;
 
-use Merdiano\Payment\Exceptions\GatewayCodeException;
+use Merdanio\GatewayTM\Payment\Exceptions\GatewayCodeException;
 
 abstract class AbstractGateway
 {

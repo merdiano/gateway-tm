@@ -1,5 +1,5 @@
 <?php
-
+namespace Merdanio\GatewayTM\Payment\Facades;
 class GatewayFacade extends \Illuminate\Support\Facades\Facade
 {
     /**
@@ -7,7 +7,7 @@ class GatewayFacade extends \Illuminate\Support\Facades\Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'gateway';
     }

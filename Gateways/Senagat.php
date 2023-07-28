@@ -1,8 +1,6 @@
 <?php
 
-namespace Merdiano\Payment\Gateways;
-
-use Carbon\Carbon;
+namespace Merdanio\GatewayTM\Payment\Gateways;
 
 class Senagat extends AbstractGateway
 {

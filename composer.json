@@ -1,16 +1,18 @@
 {
     "name": "merdan/gateway-tm",
-    "description": "Turkmenistan Local payment gateway integration service",
+    "description": "A simple library that provides integration to local Bank payment processing services in Turkmenistan.",
     "type": "library",
     "require": {
         "laravel/framework": "^9.0|^10.0",
         "php": "^8.1"
     },
+
     "license": "MIT",
     "authors": [
         {
             "name": "Merdan Ahmetovich",
-            "email": "merdan.m@gmail.com"
+            "email": "merdan.m@gmail.com",
+            "role": "Developer"
         }
     ],
     "keywords": [
@@ -21,11 +23,19 @@
         "senagat",
         "turkmen bank"
     ],
+    "autoload": {
+        "psr-4": {
+            "Payment": "/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
-                "Merdanio\\Payment\\Providers\\GatewayServiceProvider"
-            ]
+                "Merdanio\\GatewayTM\\Payment\\Providers\\GatewayServiceProvider"
+            ],
+            "aliases": {
+                "Gateway": "Merdanio\\GatewayTM\\Payment\\Facades\\GatewayFacade"
+            }
         }
     },
     "minimum-stability": "dev"

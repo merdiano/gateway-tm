@@ -1,13 +1,13 @@
 <?php
 
-namespace Merdiano\Payment\App;
+namespace Merdanio\GatewayTM\Payment\App;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
-use Merdiano\Payment\Gateways\IRegistrationResult;
+use Merdanio\GatewayTM\Payment\Gateways\IRegistrationResult;
 use Exception;
-use Merdiano\Payment\Gateways\PaymentStatus;
-use Merdiano\Payment\Gateways\RegistrationResult;
+use Merdanio\GatewayTM\Payment\Gateways\PaymentStatus;
+use Merdanio\GatewayTM\Payment\Gateways\RegistrationResult;
 
 class GatewayManager
 {
@@ -20,16 +20,14 @@ class GatewayManager
     {
         $gateways = [];
 
-        foreach (config('gateways') as $gatewatMethod) {
-            $object = new $gatewatMethod['class'];
-
-            if (! $object->isAvailable()) {
+        foreach (config('gateway.clients') as $gatewayMethod) {
+            if (! $gatewayMethod['active']) {
                 continue;
             }
 
             $gateways[] = [
-                'code' => $object->getCode(),
-                'title' => $object->getTitle(),
+                'code' => $gatewayMethod['code'],
+                'title' => trans($gatewayMethod['title']),
             ];
         }
         return $gateways;
@@ -52,6 +50,7 @@ class GatewayManager
                                   string $orderId) : IRegistrationResult
     {
         $gatewayClient = GatewayFactory::create($code,$orderId);
+
         $gatewayClient->setAmount($amount);
         $gatewayClient->setDescription($description);
 

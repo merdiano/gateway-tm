@@ -1,5 +1,5 @@
 <?php
-namespace Merdiano\Payment\Exceptions;
+namespace Merdanio\GatewayTM\Payment\Exceptions;
 
 use Exception;
 

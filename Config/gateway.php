@@ -24,7 +24,7 @@ return [
         "altyn-asyr"      => [
             "code"        => "altyn-asyr",
             "title"       => "gateway::app.altyn-asyr.title",
-            "class"       => \Merdiano\Payment\Gateways\AltynAsyr::class,
+            "class"       => \Merdanio\GatewayTM\Payment\Gateways\AltynAsyr::class,
             "active"      => true,
             "user"        => env('ALTYN_ASYR_USER'),
             "password"    => env('ALTYN_ASYR_PASSWORD'),
@@ -35,7 +35,7 @@ return [
         "rysgal"          => [
             "code"        => "rysgal",
             "title"       => "gateway::app.rysgal.title",
-            "class"       => \Merdiano\Payment\Gateways\Rysgalbank::class,
+            "class"       => \Merdanio\GatewayTM\Payment\Gateways\Rysgalbank::class,
             "active"      => true,
             "user"        => env('RYSGAL_USER'),
             "password"    => env('RYSGAL_PASSWORD'),
@@ -46,7 +46,7 @@ return [
         "senagat"         => [
             "code"        => "senagat",
             "title"       => "gateway::app.senagat.title",
-            "class"       => \Merdiano\Payment\Gateways\Senagat::class,
+            "class"       => \Merdanio\GatewayTM\Payment\Gateways\Senagat::class,
             "active"      => true,
             "user"        => env('SENAGAT_USER'),
             "password"    => env('SENAGAT_PASSWORD'),
