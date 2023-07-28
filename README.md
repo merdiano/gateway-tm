@@ -68,7 +68,7 @@ Gateway::availableGates();
 Gateway::registerOrder('rysgal', // providers code
     'success_route_name',        // route to return when payment is successful
     'fail_route_name',           // route to return when payment failed
-    14500,                       // payment amount
+    14500,                       // payment amount 145 man.
     'Example Ecommerse payment', // payment description
     'ord-123'                    // payment order number
 );
