@@ -29,12 +29,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Payment\\": "src"
+            "Merdanio\\GatewayTM\\Payment\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Payment\\": "tests"
+            "Merdanio\\GatewayTM\\Payment\\": "tests/"
         }
     },
     "extra": {
