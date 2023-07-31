@@ -44,7 +44,7 @@ abstract class AbstractGateway
     }
 
     public function getOrderId() : string {
-        return $this->orderId;
+        return $this->order_id;
     }
 
     /**
@@ -91,7 +91,7 @@ abstract class AbstractGateway
                 'userName' => $this->getConfigData('user'),
                 'password' => $this->getConfigData('password'),
                 'sessionTimeoutSecs' => config('gateway.http_client.timeout'),
-                'orderNumber' =>$this->orderId,
+                'orderNumber' =>$this->order_id,
                 'currency' => 934,
                 'language' => 'ru',
                 'description'=> $this->description,

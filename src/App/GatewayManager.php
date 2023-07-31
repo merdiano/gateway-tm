@@ -2,7 +2,6 @@
 
 namespace Merdanio\GatewayTM\Payment\App;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Merdanio\GatewayTM\Payment\Gateways\IPaymentStatus;
 use Merdanio\GatewayTM\Payment\Gateways\IRegistrationResult;
