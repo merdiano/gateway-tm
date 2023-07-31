@@ -2,6 +2,7 @@
 
 namespace Merdanio\GatewayTM\Payment\Gateways;
 
+use Merdanio\GatewayTM\Payment\Exceptions\GatewayAddressException;
 use Merdanio\GatewayTM\Payment\Exceptions\GatewayCodeException;
 
 abstract class AbstractGateway
@@ -43,7 +44,13 @@ abstract class AbstractGateway
         return $this->getConfigData('title');
     }
 
-    public function getOrderId() : string {
+    /**
+     * Payment order id
+     *
+     * @return string
+     */
+    public function getOrderId() : string
+    {
         return $this->order_id;
     }
 
@@ -56,6 +63,54 @@ abstract class AbstractGateway
     public function getConfigData(string $field)
     {
         return config('gateway.clients.' . $this->getCode() . '.' . $field);
+    }
+
+    /**
+     * Payment order registration address
+     *
+     * @return string
+     * @throws GatewayAddressException
+     * @throws GatewayCodeException
+     */
+    public function getRegistrationURL() : string
+    {
+        if( $order_uri = config('gateway.clients.' . $this->getCode() . '.order_uri' )){
+            return $this->apiURL().$order_uri;
+        }
+
+        throw new GatewayAddressException();
+    }
+
+    /**
+     * Payment order status address
+     *
+     * @return string
+     * @throws GatewayAddressException
+     * @throws GatewayCodeException
+     */
+    public function getStatusURL() : string
+    {
+        if( $status_uri = config('gateway.clients.' . $this->getCode() . '.status_uri' )){
+            return $this->apiURL().$status_uri;
+        }
+
+        throw new GatewayAddressException();
+    }
+
+    /**
+     * Payment service API address
+     *
+     * @return string
+     * @throws GatewayAddressException
+     * @throws GatewayCodeException
+     */
+    public function apiURL() : string
+    {
+        if($api = config('gateway.clients.' . $this->getCode() . '.api' )){
+            return $api;
+        }
+
+        throw new GatewayAddressException();
     }
 
     /**
@@ -87,18 +142,16 @@ abstract class AbstractGateway
     public function orderParams(string $success_route, string $fail_route) : array
     {
         return [
-            'form_params' => [
-                'userName' => $this->getConfigData('user'),
-                'password' => $this->getConfigData('password'),
-                'sessionTimeoutSecs' => config('gateway.http_client.timeout'),
-                'orderNumber' =>$this->order_id,
-                'currency' => 934,
-                'language' => 'ru',
-                'description'=> $this->description,
-                'amount' => $this->amount,// amount w kopeykah
-                'returnUrl' => route($success_route,['orderId' => $this->order_id]),
-                'failUrl' => route($fail_route,['orderId'=>$this->order_id])
-            ],
+            'userName' => $this->getConfigData('user'),
+            'password' => $this->getConfigData('password'),
+            'sessionTimeoutSecs' => config('gateway.http_client.timeout'),
+            'orderNumber' =>$this->order_id,
+            'currency' => 934,
+            'language' => 'ru',
+            'description'=> $this->description,
+            'amount' => $this->amount,// amount w kopeykah
+            'returnUrl' => route($success_route,['orderId' => $this->order_id]),
+            'failUrl' => route($fail_route,['orderId'=>$this->order_id])
         ];
     }
 

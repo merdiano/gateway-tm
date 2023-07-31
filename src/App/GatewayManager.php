@@ -3,6 +3,7 @@
 namespace Merdanio\GatewayTM\Payment\App;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Merdanio\GatewayTM\Payment\Gateways\IPaymentStatus;
 use Merdanio\GatewayTM\Payment\Gateways\IRegistrationResult;
 use Merdanio\GatewayTM\Payment\Gateways\PaymentStatus;
@@ -53,20 +54,28 @@ class GatewayManager
         $gatewayClient->setAmount($amount);
         $gatewayClient->setDescription($description);
 
-        $response = Http::retry(3,300)
-            ->asForm()
-            ->post(
-                $gatewayClient->getConfigData('order_uri'),
-                $gatewayClient->orderParams($success_route_name,$failure_route_name)
-            );
+        try {
+            $response = Http::retry(3,300)
+                ->asForm()
+                ->post(
+                    $gatewayClient->getRegistrationURL(),
+                    $gatewayClient->orderParams($success_route_name,$failure_route_name)
+                );
 
-        if($response->failed()){
-            $ex = $response->toException();
+            if($response->failed()){
+                $ex = $response->toException();
 
-            return new RegistrationResult(false, $ex->getMessage());
+                return new RegistrationResult(false, $ex->getMessage());
+            }
+
+            return $gatewayClient->registrationResult($response->json());
+        }catch (\Exception $e){
+            return new RegistrationResult(false, $e->getMessage());
         }
 
-        return $gatewayClient->registrationResult($response);
+    }
+
+    private function fail($e){
 
     }
 
@@ -80,20 +89,25 @@ class GatewayManager
     {
         $gatewayClient = GatewayFactory::create($code,$orderId);
 
-        $response = Http::retry(3,300)
-            ->asForm()
-            ->post(
-                $gatewayClient->getConfigData('status_uri'),
-                $gatewayClient->statusParams($orderId)
-            );
+        try{
+            $response = Http::retry(3,300)
+                ->asForm()
+                ->post(
+                    $gatewayClient->getStatusURL(),
+                    $gatewayClient->statusParams($orderId)
+                );
 
-        if($response->failed()){
-            $ex = $response->toException();
+            if($response->failed()){
+                $ex = $response->toException();
 
-            return new PaymentStatus(false, $ex->getMessage());
+                return new PaymentStatus(false, $ex->getMessage());
+            }
+
+            return $gatewayClient->paymentStatus($response->json());
         }
-
-        return $gatewayClient->paymentStatus($response);
+        catch (\Exception $e){
+            return new PaymentStatus(false, $e->getMessage());
+        }
 
     }
 }

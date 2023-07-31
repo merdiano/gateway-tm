@@ -17,7 +17,7 @@ Default installation is via [Composer](https://getcomposer.org/).
 composer require merdan/gateway-tm
 ```
 The package will automatically register itself.
-Add the Service Provider manually to your
+Add the Service Provider and alias manually to your
 `config/app` file in the `providers` section.
 
 ```php
@@ -26,7 +26,12 @@ Add the Service Provider manually to your
     Merdanio\GatewayTM\Payment\Providers\GatewayServiceProvider::class,
 ]
 ```
-
+```php
+    'aliases' => Facade::defaultAliases()->merge([
+        // 'Example' => App\Facades\Example::class,
+        'Gateway' => Merdanio\GatewayTM\Payment\Facades\GatewayFacade::class
+    ])->toArray(),
+```
 Publish the config
 
 ```bash
@@ -54,9 +59,16 @@ Please configure the following credentials in your .env file, which you will obt
 `SENAGAT_STATUS_URI='orderStatus.do'`
 
 ## Usage
-Add Gateway facade to your class
+Add Gateway facade to your class, controller
 ```php
 use Gateway;
+
+class MyController extends Controller {
+
+    public function index() {
+        return Gateway::availableGates();
+    }
+}
 ```
 ### Available payment providers
 
