@@ -3,10 +3,14 @@
     "description": "A simple library that provides integration to local Bank payment processing services in Turkmenistan.",
     "type": "library",
     "require": {
-        "laravel/framework": "^9.0|^10.0",
+        "illuminate/support": "^9.0|^10.0",
+        "illuminate/translation": "^9.0|^10.0",
         "php": "^8.1"
     },
-
+    "require-dev": {
+        "orchestra/testbench": "*",
+        "phpunit/phpunit": "^9.4"
+    },
     "license": "MIT",
     "authors": [
         {
@@ -25,7 +29,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Payment\\": "/"
+            "Payment\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Payment\\": "tests"
         }
     },
     "extra": {

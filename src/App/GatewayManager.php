@@ -2,10 +2,10 @@
 
 namespace Merdanio\GatewayTM\Payment\App;
 
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+use Merdanio\GatewayTM\Payment\Gateways\IPaymentStatus;
 use Merdanio\GatewayTM\Payment\Gateways\IRegistrationResult;
-use Exception;
 use Merdanio\GatewayTM\Payment\Gateways\PaymentStatus;
 use Merdanio\GatewayTM\Payment\Gateways\RegistrationResult;
 
@@ -54,22 +54,21 @@ class GatewayManager
         $gatewayClient->setAmount($amount);
         $gatewayClient->setDescription($description);
 
-        try {
-            $httpClient = $this->http_client($gatewayClient->getConfigData('api'));
+        $response = Http::retry(3,300)
+            ->asForm()
+            ->post(
+                $gatewayClient->getConfigData('order_uri'),
+                $gatewayClient->orderParams($success_route_name,$failure_route_name)
+            );
 
-            $params = $gatewayClient->orderParams($success_route_name, $failure_route_name);
+        if($response->failed()){
+            $ex = $response->toException();
 
-            $response = $httpClient->post($gatewayClient->getConfigData('order_uri'),$params);
-
-            $result = json_decode($response->getBody(),true);
-
-            return $gatewayClient->registrationResult($result);
-
-        }catch (Exception $e){
-            Log::error($e);
-
-            return new RegistrationResult(false,$e->getMessage());
+            return new RegistrationResult(false, $ex->getMessage());
         }
+
+        return $gatewayClient->registrationResult($response);
+
     }
 
     /**
@@ -78,39 +77,24 @@ class GatewayManager
      * @param string $code
      * @param string $orderId
      */
-    public function getOrderStatus(string $code, string $orderId)
+    public function getOrderStatus(string $code, string $orderId) : IPaymentStatus
     {
         $gatewayClient = GatewayFactory::create($code,$orderId);
 
-        try{
-            $httpClient = $this->http_client($gatewayClient->getConfigData('api'));
+        $response = Http::retry(3,300)
+            ->asForm()
+            ->post(
+                $gatewayClient->getConfigData('status_uri'),
+                $gatewayClient->statusParams($orderId)
+            );
 
-            $response = $httpClient->post($gatewayClient->getConfigData('status_uri'),$gatewayClient->statusParams($orderId));
+        if($response->failed()){
+            $ex = $response->toException();
 
-            $result = json_decode($response->getBody(),true);
-
-            return $gatewayClient->paymentStatus($result);
-
-        }catch(Exception $e){
-            Log::error($e);
-
-            return new PaymentStatus(false, $e->getMessage());
+            return new PaymentStatus(false, $ex->getMessage());
         }
-    }
 
-    /**
-     * Prepare Http Client
-     *
-     * @param string $url
-     * @return Client
-     */
-    private function http_client(string $url) : Client
-    {
-        return new Client([
-            'base_uri' => $url,
-            'connect_timeout' => config('gateway.http_client.connect_timeout'),
-            'timeout' => config('gateway.http_client.connect_timeout'),
-            'verify' => config('gateway.http_client.connect_timeout'),
-        ]);
+        return $gatewayClient->paymentStatus($response);
+
     }
 }
