@@ -96,8 +96,8 @@ abstract class AbstractGateway
                 'language' => 'ru',
                 'description'=> $this->description,
                 'amount' => $this->amount,// amount w kopeykah
-                'returnUrl' => route($success_route,['orderId' => $this->orderId]),
-                'failUrl' => route($fail_route,['orderId'=>$this->orderId])
+                'returnUrl' => route($success_route,['orderId' => $this->order_id]),
+                'failUrl' => route($fail_route,['orderId'=>$this->order_id])
             ],
         ];
     }
