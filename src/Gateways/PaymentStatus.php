@@ -9,4 +9,13 @@ class PaymentStatus implements IPaymentStatus
     }
 
 
+    function getStatus(): bool
+    {
+        return $this->success;
+    }
+
+    function getMessage(): string
+    {
+       return $this->message;
+    }
 }

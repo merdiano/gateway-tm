@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/class-diagram
+skin rose
+
+title Classes - Class Diagram
+
+abstract class AbstractGateway{
+    #string code
+    +string getCode()
+    +string getTitle()
+    +string getOrderId()
+    +mixed getConfigData(string field)
+    +string getRegistrationUrl()
+    +string getStatusURL()
+    +string apiURL()
+    +void setAmount()
+    +void setDescription(string description)
+    +array orderParams(string $success_route, string $fail_route)
+
+}
+interface IPaymentStatus{
+    +getStatus(): bool
+    +getMessage(): string
+}
+interface IRegistrationResult{
+    +isSuccessful() : bool
+    +getMessage() : string
+    +getRedirectUrl() : string
+    +getOrderId() : string
+}
+class AltynAsyr{
+    #string code
+}
+class Senagat
+{
+    #string code
+}
+class Rysgalbank
+{
+    #string code
+}
+class GatewayManager{
+    +availableGates() : array
+    +registerOrder() : IRegistrationResult
+    +getOrderStatus() : IPaymentStatus
+}
+class GatewayFactory{
++ create(string $code, string $order_id) : AbstractGateway
+}
+IPaymentStatus <|.. PaymentStatus
+IRegistrationResult <|.. RegistrationResult
+GatewayFactory - AbstractGateway : creates >
+AbstractGateway <|- AltynAsyr
+AbstractGateway <|- Senagat
+AbstractGateway <|- Rysgalbank
+GatewayManager ..> IRegistrationResult
+GatewayManager ..> IPaymentStatus
+AbstractGateway ..> PaymentStatus
+AbstractGateway ..> RegistrationResult
+GatewayManager ..> AbstractGateway
+GatewayManager ..> GatewayFactory
+
+@enduml

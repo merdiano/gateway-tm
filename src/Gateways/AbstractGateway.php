@@ -60,7 +60,7 @@ abstract class AbstractGateway
      * @param  string  $field
      * @return mixed
      */
-    public function getConfigData(string $field)
+    public function getConfigData(string $field):mixed
     {
         return config('gateway.clients.' . $this->getCode() . '.' . $field);
     }

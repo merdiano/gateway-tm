@@ -3,9 +3,10 @@
     "description": "A simple library that provides integration to local Bank payment processing services in Turkmenistan.",
     "type": "library",
     "require": {
+        "php": "^8.1",
+        "ext-json": "*",
         "illuminate/support": "^9.0|^10.0",
-        "illuminate/translation": "^9.0|^10.0",
-        "php": "^8.1"
+        "illuminate/translation": "^9.0|^10.0"
     },
     "require-dev": {
         "orchestra/testbench": "*",
